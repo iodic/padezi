@@ -2,16 +2,11 @@
 
 Mikro sajt za peti razred: pitanja za padeže, prepoznavanje imenica u rečenicama i tipične zabune. Ćirilica i latinica, objašnjenje posle svakog odgovora, ponavljanje grešaka i lokalni rekordi. Bez tajmera.
 
-## Vercel
+## Hosting
 
-Projekat je statički: nema instalacije paketa ni build koraka.
+Adresa: **http://padezi.iodicdesign.com** (običan HTTP, bez `https://`).
 
-1. Postavi sadržaj ovog foldera u Git repozitorijum i importuj ga u Vercel.
-2. Framework Preset: **Other**; Root Directory: folder gde je `index.html`.
-3. Build Command: prazno; Output Directory: `.`; ne treba Install Command.
-4. Deploy.
-
-Produkcija: https://padezi-kviz.vercel.app (projekat `padezi-kviz`). Ručni deploy: `vercel deploy --prod`.
+Projekat je statički: nema instalacije paketa ni build koraka. Svaki push na `main` pokreće `.github/workflows/deploy-pages.yml`, koji objavljuje samo `index.html` na GitHub Pages. Repo `iodic/padezi` mora biti javan (Free plan), a u podešavanjima Pages opcija „Enforce HTTPS“ mora ostati isključena. DNS u Cloudflare-u: `padezi` CNAME → `iodic.github.io`, DNS only (siva ikonica). Isti model koristi `dom.iodicdesign.com`.
 
 Nema backend-a, ključeva, baze, kolačića ni spoljašnjih zavisnosti. `index.html` sadrži i stilove i sve zadatke; dovoljan je taj jedan fajl za rad kviza. Ne treba Service Worker niti podrška za module.
 
@@ -19,9 +14,9 @@ Nema backend-a, ključeva, baze, kolačića ni spoljašnjih zavisnosti. `index.h
 
 Kod je namerno pisan u ES3 stilu: `var`, obične funkcije, `onclick`, `innerHTML`. Nema React-a, modula, fetch-a, Promise-a, let/const-a, arrow funkcija, Flexbox-a, Grid-a, CSS varijabli, web-fontova, SVG-a ni novijih API-ja. Raspored koristi inline-block; kontrole su velike i rade na dodir. Čuvanje rezultata je opciono i obuhvaćeno try/catch blokovima (privatni režim starog Safarija može zabraniti upis).
 
-**Važno: prvi iPad ne može da otvori Vercel adresu.** Provereno 2026-11-23: `*.vercel.app` na TLS 1.2 prihvata samo AES-GCM i ChaCha20 cipher suite-ove, a iOS 5/6 Safari ima samo CBC (GCM stiže tek u iOS 9). HTTP zahtev Vercel preusmerava na HTTPS (308 + `Refresh`), pa ni to ne pomaže. Kod je kompatibilan; problem je samo TLS na hostingu.
+**Zašto ne Vercel / HTTPS:** provereno 2026-11-23: `*.vercel.app` na TLS 1.2 prihvata samo AES-GCM i ChaCha20 cipher suite-ove, a iOS 5/6 Safari ima samo CBC (GCM stiže tek u iOS 9). Vercel uz to HTTP preusmerava na HTTPS. Zato kviz ide preko običnog HTTP-a na GitHub Pages.
 
-Pouzdan rezervni put je običan HTTP na kućnoj mreži:
+Rezervni put bez interneta je običan HTTP na kućnoj mreži:
 
 1. Mac i iPad poveži na istu Wi-Fi mrežu.
 2. Na Mac-u, u ovom folderu, pokreni `python3 serve.py`.
@@ -45,8 +40,6 @@ Sadržaj je u nizovima `cases`, `rows` i `traps` u `index.html`. Zapis jedne re�
 Gramatički pregled je proveren prema https://www.opsteobrazovanje.in.rs/srpski-jezik/gramatika/padezi/ (literatura tamo: I. Klajn, Gramatika srpskog jezika). Primeri i objašnjenja kviza su originalni. Obim prati osnovno prepoznavanje padeža; nije potpun pregled svih značenja i upotreba.
 
 Tehničke reference:
-- https://vercel.com/docs/deployments
-- https://vercel.com/docs/cdn
 - https://vercel.com/changelog/deprecating-the-dhe-cipher-suite-for-tls-connections
 - https://support.apple.com/en-al/103815
 
