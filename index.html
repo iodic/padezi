@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Падежи">
+<title>Падеж по падеж — вежбаоница</title>
+<style>
+* { -webkit-box-sizing: border-box; box-sizing: border-box; }
+body { margin: 0; background: #f2f5fa; color: #172b4d; font: 18px/1.55 Arial, sans-serif; -webkit-text-size-adjust: 100%; }
+button, select { font: inherit; }
+button { cursor: pointer; -webkit-appearance: none; border-radius: 12px; border: 2px solid #d8e1ed; background: #fff; color: #172b4d; padding: 13px 18px; min-height: 52px; line-height: 1.3; }
+button:hover, button:focus { border-color: #245acb; }
+button:focus, a:focus, select:focus { outline: 3px solid #df8b19; outline-offset: 2px; }
+button:disabled { cursor: default; opacity: 1; }
+a { color: #245acb; }
+.header { background: #fff; border-bottom: 1px solid #d8e1ed; }
+.wrap { max-width: 1060px; margin: 0 auto; padding: 22px 32px; }
+.brand { display: inline-block; font-size: 22px; font-weight: bold; letter-spacing: -1px; }
+.brand b { background: #245acb; color: #fff; display: inline-block; padding: 0 9px; border-radius: 6px; margin-right: 8px; }
+.tools { float: right; }
+.tools button { font-size: 16px; min-height: 44px; padding: 8px 12px; }
+.clear { clear: both; }
+.kicker { color: #245acb; text-transform: uppercase; font-size: 14px; font-weight: bold; letter-spacing: 2px; }
+h1 { font-size: 48px; letter-spacing: -2px; line-height: 1.12; margin: 14px 0; }
+h2 { font-size: 28px; line-height: 1.25; margin: 0 0 15px; }
+h3 { margin: 0 0 8px; font-size: 22px; }
+p { margin: 12px 0; }
+.muted { color: #53647e; }
+.hero { padding-top: 35px; padding-bottom: 24px; }
+.hero p { max-width: 630px; }
+.pill { display: inline-block; border-radius: 20px; background: #e4ecff; color: #204da8; font-size: 14px; font-weight: bold; padding: 5px 12px; }
+.grid { font-size: 0; margin: 0 -8px; }
+.tile { display: inline-block; vertical-align: top; width: 50%; padding: 8px; font-size: 18px; }
+.card { background: #fff; border: 1px solid #d8e1ed; border-radius: 18px; padding: 25px; }
+.mode { display: block; width: 100%; text-align: left; min-height: 188px; padding: 24px; border-width: 1px; border-bottom: 5px solid #cbd9f6; }
+.mode .num { font-size: 14px; color: #245acb; font-weight: bold; letter-spacing: 1px; }
+.mode strong { display: block; font-size: 25px; margin: 12px 0 8px; }
+.mode span.desc { display: block; font-size: 17px; color: #53647e; line-height: 1.5; }
+.mode.primary { background: #245acb; color: #fff; border-color: #245acb; border-bottom-color: #153a8a; }
+.mode.primary .num, .mode.primary span.desc { color: #fff; }
+.note { margin: 24px 0; padding: 18px 22px; background: #e7edf8; border-radius: 12px; }
+.small { font-size: 15px; }
+.footer { padding: 20px 0 35px; color: #53647e; font-size: 14px; }
+.footer button { font-size: 14px; min-height: 44px; padding: 8px 12px; margin: 0 5px 8px 0; }
+.nav { margin: 8px 0 24px; }
+.linkbtn { background: transparent; border: 1px solid #bcc9dc; }
+.primary-btn { background: #245acb; color: #fff; border-color: #245acb; font-weight: bold; }
+.primary-btn:hover, .primary-btn:focus { border-color: #132f6b; }
+.progress { height: 8px; background: #dce4f1; border-radius: 8px; overflow: hidden; margin: 12px 0 24px; }
+.progress span { display: block; height: 8px; background: #245acb; }
+.quiz { max-width: 850px; margin: 0 auto; }
+.topline { font-size: 15px; color: #53647e; }
+.right { float: right; }
+.sentence { font-size: 32px; line-height: 1.6; margin: 22px 0; }
+mark { background: #fff0bb; color: #172b4d; padding: 2px 5px; border-bottom: 3px solid #e2a624; border-radius: 4px; }
+.answers { font-size: 0; margin: 10px -5px; }
+.answer { display: inline-block; vertical-align: top; width: 48%; margin: 5px 1%; text-align: left; font-size: 19px; padding: 16px; }
+.answer .letter { font-size: 13px; display: inline-block; border: 1px solid #c4cfe0; border-radius: 5px; padding: 2px 6px; margin-right: 10px; }
+.answer.good { border-color: #177148; background: #e5f5ec; color: #114e35; }
+.answer.bad { border-color: #ad3441; background: #fff0f0; color: #8b2330; }
+.feedback { border-left: 5px solid #177148; background: #edf8f1; padding: 18px 20px; margin-top: 20px; border-radius: 8px; }
+.feedback.wrong { border-color: #b67610; background: #fff6df; }
+.feedback h3 { font-size: 22px; }
+.feedback p { margin: 8px 0; }
+.actions { margin-top: 22px; }
+.actions button { margin: 0 8px 8px 0; }
+.hint { margin-top: 15px; color: #53647e; font-size: 17px; }
+.case { margin-bottom: 15px; border-left: 5px solid #245acb; }
+.case .question { font-size: 24px; color: #245acb; font-weight: bold; }
+.case p { margin: 8px 0; }
+.trap { margin-bottom: 18px; }
+.trap b { color: #245acb; }
+.score { font-size: 64px; font-weight: bold; color: #245acb; line-height: 1.2; margin: 22px 0; }
+.review { padding: 16px 0; border-top: 1px solid #d8e1ed; }
+.review p { margin: 6px 0; }
+select { max-width: 100%; padding: 12px; min-height: 50px; background: #fff; color: #172b4d; border: 1px solid #bcc9dc; border-radius: 8px; }
+#focus-title:focus { outline: none; }
+@media (max-width: 650px) {
+ .wrap { padding: 18px; } h1 { font-size: 38px; } .brand { font-size: 18px; } .brand b { margin-right: 4px; } .tools button { padding: 8px; }
+ .tile { width: 100%; } .mode { min-height: 150px; } .sentence { font-size: 27px; } .card { padding: 20px; } .answer { font-size: 18px; padding: 14px 10px; } .answer .letter { display: none; }
+}
+@media print { .header, .nav, .footer, .actions, .tools { display: none; } body { background: #fff; } .card { page-break-inside: avoid; } }
+</style>
+</head>
+<body>
+<div class="header"><div class="wrap"><span class="brand"><b>7</b> <span id="brand">Падеж по падеж</span></span><div class="tools"><button id="script-toggle" type="button" onclick="App.toggleScript()">Latinica</button></div><div class="clear"></div></div></div>
+<div id="app" class="wrap"><p>Квиз се учитава…</p></div>
+<noscript><p>За квиз укључи JavaScript у подешавањима Safarija.</p></noscript>
+<script>
+/* ES3 syntax, no dependencies, no network requests. Target: iOS 5 Safari. */
+var App = (function () {
+	var cases = [
+		['Номинатив','Ко? Шта?','Именује појам; често означава вршиоца радње.','[Дечак] чита књигу.','Ко чита? Дечак.','Не мешај са акузативом: „Воз стиже“ — номинатив; „Чекам воз“ — акузатив.'],
+		['Генитив','Кога? Чега?','Често означава припадање, део, одсуство или порекло.','Нема [млека].','Нема чега? Млека.','Питање „кога?“ дели са акузативом. Гледај целу реченицу: „нема брата“ и „видим брата“.'],
+		['Датив','Коме? Чему?','Често означава примаоца, намену или усмереност ка нечему.','Дајем књигу [другу].','Коме дајем књигу? Другу.','Датив и локатив често имају исти облик: „помажем сестри“ и „причам о сестри“.'],
+		['Акузатив','Кога? Шта?','Често означава предмет радње или циљ кретања уз предлог.','Читам [књигу].','Шта читам? Књигу.','Уз „у“ и „на“ разликуј циљ кретања („у школу“) од места („у школи“). Није свако кретање акузатив: „Трчим у парку“ је локатив.'],
+		['Вокатив','Нема питање — хеј!','Служи за дозивање и обраћање.','[Друже], дођи!','Обраћамо се другу.','„Хеј!“ је помоћни узвик, а не питање. „Мама спава“ је номинатив; „Мама, дођи!“ је вокатив, иако је облик исти.'],
+		['Инструментал','С ким? Чиме?','Често означава друштво или средство; може означавати и место.','Пишем [оловком].','Чиме пишем? Оловком.','Друштво: „са другом“. Средство: „оловком“, без „са“. Предлог „са“ не значи увек инструментал: „са стола“ је генитив.'],
+		['Локатив','О коме? О чему?','Често означава место или тему; увек се употребљава са предлогом.','Причам о [филму].','О чему причам? О филму.','Питање прилагоди реченици: „У чему је вода? У чаши.“ Уз „у/на“ место је локатив, циљ кретања акузатив.']
+	];
+	/* Sentence, correct case index, contextual question, explanation, contrast group. */
+	var rows = [
+		['[Воз] стиже.',0,'Шта стиже?','Воз је оно што стиже. У „Чекам воз“ иста реч је предмет радње и у акузативу.','na'],
+		['Чекам [воз].',3,'Шта чекам?','Воз је предмет радње. Облик је исти као у номинативу, али му је улога другачија.','na'],
+		['[Дечак] трчи.',0,'Ко трчи?','Дечак врши радњу. Номинатив се овде препознаје питањем „ко?“.',''],
+		['[Сунце] сија.',0,'Шта сија?','Сунце је оно о чему се говори, субјекат реченице.','na'],
+		['Цртам [сунце].',3,'Шта цртам?','Сунце је предмет радње. Не одређуј падеж само по наставку.','na'],
+		['[Девојчице] певају.',0,'Ко пева?','Девојчице су вршиоци радње. У „Видим девојчице“ исти облик је акузатив.','na'],
+		['Видим [девојчице].',3,'Кога видим?','Девојчице су предмет радње, а не њени вршиоци.','na'],
+		['[Лопта] је црвена.',0,'Шта је црвено?','Лопта је субјекат реченице. Номинатив није само вршилац радње: овде се описује особина.',''],
+		['[Мама] спава.',0,'Ко спава?','Говоримо о мами; не обраћамо јој се. Зато је номинатив.','nv'],
+		['[Мама], дођи!',4,'Да ли се некоме обраћамо?','Да, дозивамо маму. Вокатив може имати исти облик као номинатив.','nv'],
+		['[Децо], отворите свеске!',4,'Коме се обраћамо? (Није падежно питање.)','Дозивамо децу. Вокатив нема падежно питање; помаже узвик „хеј!“.','nv'],
+		['[Учитељице], имам питање.',4,'Да ли је ово обраћање?','Говорник се обраћа учитељици. Вокатив се у писању издваја запетом.','nv'],
+		['[Луко], додај ми лопту!',4,'Кога дозивамо? (Није падежно питање.)','Обраћамо се Луки: „Хеј, Луко!“ То је вокатив.',''],
+		['[Другови], сачекајте ме!',4,'Да ли се некоме обраћамо?','Да, обраћамо се друговима. Исти облик у „Другови чекају“ био би номинатив.','nv'],
+		['[Другови] ме чекају.',0,'Ко ме чека?','Другови врше радњу; о њима говоримо, не дозивамо их.','nv'],
+		['[Брате], погледај ово!',4,'Да ли је ово дозивање?','Обраћамо се брату. Помоћни узвик је „хеј“, али вокатив нема питање.',''],
+		['Нема [брата] код куће.',1,'Нема кога?','Означено је одсуство. „Видим брата“ има исти облик, али други падеж: акузатив.','ga'],
+		['Видим [брата].',3,'Кога видим?','Брат је предмет радње. „Кога?“ није довољно без реченице: генитив такође има то питање.','ga'],
+		['Враћам се од [друга].',1,'Од кога се враћам?','Предлог „од“ уз ову именицу захтева генитив.','ga'],
+		['Позивам [друга].',3,'Кога позивам?','Друг је предмет радње позивања. Не дозивамо га обликом „друже“, већ говоримо кога позивамо.','ga'],
+		['Ово је свеска [ученика].',1,'Чија је свеска? Свеска кога?','Генитив овде означава припадање. Реч „ученика“ може у другој реченици бити акузатив.','ga'],
+		['Учитељ хвали [ученика].',3,'Кога учитељ хвали?','Ученика је предмет радње, па је у акузативу.','ga'],
+		['Пијем чашу [воде].',1,'Чашу чега пијем?','Генитив означава садржај, количину нечега. Одређујемо падеж речи „воде“, а не речи „чашу“.',''],
+		['Долазим из [школе].',1,'Из чега долазим?','Предлог „из“ означава полазиште и тражи генитив. Само кретање не значи акузатив.',''],
+		['Нема [млека].',1,'Нема чега?','Реч означава оно чега нема, па је у генитиву.',''],
+		['Торба је поред [стола].',1,'Поред чега је торба?','Предлог „поред“ овде тражи генитив. Није свако место локатив.',''],
+		['Помажем [сестри].',2,'Коме помажем?','Сестра је она којој је помоћ намењена. „О сестри“ био би локатив.','dl'],
+		['Причам о [сестри].',6,'О коме причам?','Сестра је тема разговора. Предлог „о“ у овој реченици иде уз локатив.','dl'],
+		['Дајем лопту [другу].',2,'Коме дајем лопту?','Друг је прималац. Датив може стајати без предлога; локатив не може.','dl'],
+		['Размишљам о [другу].',6,'О коме размишљам?','Друг је тема размишљања. Исти облик као датив, али другачији однос у реченици.','dl'],
+		['Идем ка [школи].',2,'Ка чему идем?','Предлог „ка“ тражи датив. Циљ кретања уз „ка“ није акузатив.','dl'],
+		['Учим у [школи].',6,'У чему учим? Где учим?','Реч је о месту. Локатив је уз предлог „у“, а не само по питању „где?“.','al'],
+		['Идем у [школу].',3,'У шта идем? Куда идем?','Школа је циљ кретања уз „у“. Упореди: „Учим у школи“ — локатив.','al'],
+		['Радујем се [распусту].',2,'Чему се радујем?','Датив није само прималац поклона: глагол „радовати се“ овде тражи датив.','dl'],
+		['Причамо о [распусту].',6,'О чему причамо?','Распуст је тема разговора; то је локатив.','dl'],
+		['Пишем [баки] писмо.',2,'Коме пишем писмо?','Бака је прималац писма. Одређујемо падеж „баки“, не „писмо“.','dl'],
+		['Читам о [баки].',6,'О коме читам?','Бака је тема текста који читам. Предлог и значење разликују локатив од датива.','dl'],
+		['Прилазим [кући].',2,'Чему прилазим?','Глагол „прилазити“ овде тражи датив, без предлога.','dl'],
+		['Живим у [кући].',6,'У чему живим?','Место уз предлог „у“ — локатив. Облик „кући“ сам не открива падеж.','dl'],
+		['Стављам књигу на [сто].',3,'На шта стављам књигу?','Сто је одредиште премештања књиге. „На столу“ означавало би место.','al'],
+		['Књига је на [столу].',6,'На чему је књига?','Сто је место на ком се књига налази.','al'],
+		['Улазим у [парк].',3,'У шта улазим?','Парк је циљ уласка. Упореди са „Трчим у парку“.','al'],
+		['Трчим у [парку].',6,'У чему трчим? Где трчим?','Иако трчим, парк је место унутар ког се крећем, а не циљ уласка. Кретање само по себи није знак акузатива.','al'],
+		['Пењем се на [брдо].',3,'На шта се пењем?','Брдо је циљ кретања уз „на“ — акузатив.','al'],
+		['Шетам на [брду].',6,'На чему шетам?','Брдо је место шетње. И уз глагол кретања именица може бити у локативу.','al'],
+		['Читам [књигу].',3,'Шта читам?','Књига је предмет радње читања.',''],
+		['Пишем [оловком].',5,'Чиме пишем?','Оловка је средство. Уз средство овде не додајемо предлог „са“.',''],
+		['Идем са [другом].',5,'С ким идем?','Друг је друштво, па је у инструменталу.','gi'],
+		['Скидам књигу са [стола].',1,'Са чега скидам књигу?','„Са“ овде означава одвајање од површине и иде са генитивом. Није друштво.','gi'],
+		['Играм се са [братом].',5,'С ким се играм?','Брат је друштво. Не одређуј падеж само по предлогу „са“.','gi'],
+		['Силазим са [брда].',1,'Са чега силазим?','Означено је полазиште кретања. „Са“ овде иде са генитивом, не инструменталом.','gi'],
+		['Режем хлеб [ножем].',5,'Чиме режем хлеб?','Нож је средство којим се врши радња.',''],
+		['Путујемо [аутобусом].',5,'Чиме путујемо?','Аутобус је превозно средство. Нема предлога „са“.',''],
+		['Шетамо са [учитељицом].',5,'С ким шетамо?','Учитељица је друштво, а не средство.','gi'],
+		['Лопта је под [столом].',5,'Под чим је лопта?','Инструментал може означавати и место уз предлог „под“. Није свако место локатив.','ai'],
+		['Гурам лопту под [сто].',3,'Под шта гурам лопту?','Циљ померања уз „под“ — акузатив. „Под столом“ било би место, инструментал.','ai'],
+		['Стојим пред [школом].',5,'Пред чим стојим?','Место уз „пред“ овде је инструментал. Није локатив само зато што означава место.','ai'],
+		['Излазим пред [школу].',3,'Пред шта излазим?','Циљ кретања уз „пред“ — акузатив.','ai'],
+		['Дајем поклоне [друговима].',2,'Коме дајем поклоне?','Примаоци су у дативу. У множини облик може бити исти у дативу, инструменталу и локативу.','dil'],
+		['Разговарам са [друговима].',5,'С ким разговарам?','Друштво уз „са“ — инструментал. Наставак „-има“ није довољан да одредиш падеж.','dil'],
+		['Причам о [друговима].',6,'О коме причам?','Тема разговора уз „о“ — локатив. Исти облик као датив и инструментал множине.','dil'],
+		['Носим храну [псима].',2,'Коме носим храну?','Пси су примаоци хране — датив.','dil'],
+		['Шетам са [псима].',5,'С ким шетам?','Пси су друштво — инструментал.','dil'],
+		['Читам о [псима].',6,'О коме читам?','Пси су тема текста — локатив.','dil'],
+		['[Птица] лети.',0,'Ко лети?','Птица врши радњу — номинатив.',''],
+		['Без [књиге] не могу да учим.',1,'Без чега не могу да учим?','Предлог „без“ тражи генитив.',''],
+		['Хвала [учитељу] на помоћи.',2,'Коме хвала?','Захвалност је упућена учитељу — датив.',''],
+		['[Вања], време је за одмор!',4,'Да ли се некоме обраћамо?','Да, дозивамо Вању. Облик је као у номинативу, али служи за обраћање.','nv'],
+		['Вода је у [чаши].',6,'У чему је вода?','Означено је место уз предлог „у“ — локатив.','al'],
+		['Сипам воду у [чашу].',3,'У шта сипам воду?','Чаша је одредиште воде уз предлог „у“ — акузатив.','al'],
+		['Покривам се [ћебетом].',5,'Чиме се покривам?','Ћебе је средство којим се покривам.','']
+	];
+	var traps = [
+		['ga','Генитив или акузатив?','Исто „кога?“, друга улога.','Нема [брата]. → генитив','Видим [брата]. → акузатив','Постави питање уз глагол. Можеш заменити именицом „сестра“: нема сестре / видим сестру.'],
+		['dl','Датив или локатив?','Исти облик не значи исти падеж.','Помажем [сестри]. → датив','Причам о [сестри]. → локатив','Коме помажем? О коме причам? Локатив увек има предлог, а датив може и без њега. „Ка школи“ је датив.'],
+		['al','Акузатив или локатив?','Циљ кретања или место уз „у/на“.','Идем у [школу]. → акузатив','Учим у [школи]. → локатив','Не гледај само да ли се неко креће: „Трчим у парку“ је локатив. Парк је место трчања, не циљ уласка.'],
+		['na','Номинатив или акузатив?','Ко/шта врши радњу, а на коме/чему се она врши?','[Воз] стиже. → номинатив','Чекам [воз]. → акузатив','Уз неживе појмове често је исти облик. Упореди питања уз глагол: шта стиже / шта чекам.'],
+		['nv','Номинатив или вокатив?','Говоримо о некоме или му се обраћамо.','[Мама] спава. → номинатив','[Мама], дођи! → вокатив','Вокатив нема питање. „Хеј!“ је помоћни узвик за дозивање.'],
+		['gi','Генитив или инструментал?','Предлог „са“ није довољан.','Силазим са [брда]. → генитив','Шетам са [братом]. → инструментал','Са чега? — одвајање, генитив. С ким? — друштво, инструментал.'],
+		['ai','Акузатив или инструментал?','Уз „под/пред“ разликуј циљ и место.','Гурам лопту под [сто]. → акузатив','Лопта је под [столом]. → инструментал','Није свако место локатив. Под чим? Пред чим? — у овим примерима инструментал.'],
+		['dil','Датив, инструментал или локатив?','У множини могу имати исти облик.','Дајем храну [псима]. → датив','Шетам са [псима]. → инструментал','„Читам о псима“ — локатив. Коме? С ким? О коме? Цела реченица открива падеж.']
+	];
+	var latin = false, screen = 'home', quizMode = '', filter = '', items = [], position = 0, correct = 0, mistakes = [], history = [], answered = false, selected = -1, hinted = false, best = {}, saved = true;
+	var root = document.getElementById('app');
+	try { latin = localStorage.getItem('padezi-script') === 'latin'; best = JSON.parse(localStorage.getItem('padezi-best') || '{}') || {}; } catch (e) { saved = false; }
+	function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+	function trans(s) {
+		var cy = 'АБВГДЂЕЖЗИЈКЛЉМНЊОПРСТЋУФХЦЧЏШабвгдђежзијклљмнњопрстћуфхцчџш';
+		var la = ['A','B','V','G','D','Đ','E','Ž','Z','I','J','K','L','Lj','M','N','Nj','O','P','R','S','T','Ć','U','F','H','C','Č','Dž','Š','a','b','v','g','d','đ','e','ž','z','i','j','k','l','lj','m','n','nj','o','p','r','s','t','ć','u','f','h','c','č','dž','š'];
+		var out = '', i, n;
+		for (i = 0; i < s.length; i++) { n = cy.indexOf(s.charAt(i)); out += n < 0 ? s.charAt(i) : la[n]; }
+		return out;
+	}
+	function marked(s) { return esc(s).replace(/\[([^\]]+)\]/g,'<mark>$1</mark>'); }
+	function button(label, action, cls) { return '<button type="button" class="' + (cls || '') + '" onclick="App.' + action + '">' + label + '</button>'; }
+	function put(html, focus) {
+		root.innerHTML = latin ? trans(html) : html;
+		document.getElementById('brand').innerHTML = latin ? 'Padež po padež' : 'Падеж по падеж';
+		document.getElementById('script-toggle').innerHTML = latin ? 'Ћирилица' : 'Latinica';
+		if (focus) { window.scrollTo(0, 0); var title = document.getElementById('focus-title'); if (title) { try { title.focus(); } catch (e) {} } }
+	}
+	function title(text, cls) { return '<h1 id="focus-title" tabindex="-1"' + (cls ? ' class="' + cls + '"' : '') + '>' + text + '</h1>'; }
+	function nav() { return '<div class="nav">' + button('Почетна', 'home()', 'linkbtn') + '</div>'; }
+	function mode(code, num, name, desc, primary) { return '<div class="tile"><button type="button" class="mode' + (primary ? ' primary' : '') + '" onclick="App.start(\'' + code + '\')"><span class="num">' + num + '</span><strong>' + name + '</strong><span class="desc">' + desc + '</span></button></div>'; }
+	function home(focus) {
+		screen = 'home';
+		var s = '<div class="hero"><span class="kicker">СРПСКИ ЈЕЗИК · 5. РАЗРЕД</span>' + title('Мали кораци.<br>Свих седам падежа.') + '<p class="muted">Научи питања, пронађи падеж у реченици и разреши најчешће забуне. Без журбе — сваки одговор је прилика да научиш.</p><span class="pill">Једна рунда · 10 задатака</span></div><div class="grid">';
+		s += mode('questions','ЗАГРЕВАЊЕ','Знам ли питања?','Повежи падеж и његова питања. У оба смера.',false);
+		s += mode('sentences','ВЕЖБАЊЕ','Падеж у реченици','Прочитај реченицу. Одреди падеж означене именице.',true);
+		s += '<div class="tile"><button type="button" class="mode" onclick="App.trapPage()"><span class="num">ПОСЕБАН ИЗАЗОВ</span><strong>Не дај да те збуне</strong><span class="desc">Исти облици, различити падежи. Упореди, па вежбај.</span></button></div>';
+		s += '<div class="tile"><button type="button" class="mode" onclick="App.learn()"><span class="num">ПОДСЕТНИК</span><strong>Седам на једном месту</strong><span class="desc">Питања, примери и мали трикови за памћење.</span></button></div></div>';
+		s += '<div class="note"><strong>Мали трик, велика разлика.</strong><br>Падеж тражи у целој реченици. „Брата“ може бити и генитив и акузатив!</div>';
+		var keys = ['questions','sentences','traps'], labels = ['Питања','Реченице','Забуне'], i, progress = '';
+		for (i = 0; i < keys.length; i++) { if (typeof best[keys[i]] === 'number') { progress += labels[i] + ': ' + best[keys[i]] + '% · '; } }
+		if (progress) { s += '<p class="small muted">Најбоље пуне рунде: ' + progress.substring(0,progress.length - 3) + '</p>'; }
+		s += '<div class="footer">Без тајмера и без пријаве. ' + (saved ? 'Резултати остају само у овом прегледачу.' : 'Чување резултата није доступно; квиз и даље ради.') + '<p>' + button('За родитеље', 'parents()', '') + button('Обриши резултате', 'reset()', '') + '</p></div>';
+		put(s,focus);
+	}
+	function learn() {
+		screen = 'learn'; var s = nav() + '<span class="kicker">ПОДСЕТНИК</span>' + title('Седам падежа, корак по корак.') + '<p class="muted">Прво прочитај целу реченицу. Затим постави питање уз реч од које именица зависи.</p>', i;
+		for (i = 0; i < cases.length; i++) { s += '<div class="card case"><h2>' + cases[i][0] + '</h2><div class="question">' + cases[i][1] + '</div><p>' + cases[i][2] + '</p><p>' + marked(cases[i][3]) + ' <span class="muted">' + cases[i][4] + '</span></p><p class="small muted">' + cases[i][5] + '</p></div>'; }
+		s += '<div class="note"><strong>Важно:</strong> Питања су помоћ, не замена за значење реченице. Предлози нису увек везани за један падеж. Вокатив нема питање.</div><div class="actions">' + button('Вежбај питања','start(\'questions\')','primary-btn') + button('Вежбај реченице','start(\'sentences\')','') + '</div>';
+		put(s,true);
+	}
+	function trapPage() {
+		screen = 'traps'; var s = nav() + '<span class="kicker">ЗБУЊУЈУЋИ ПАРОВИ</span>' + title('Исто изгледа.<br>Не значи исто.') + '<p class="muted">Упореди примере. Онда изабери једну забуну или их вежбај све.</p><div class="actions">' + button('Вежбај све забуне','start(\'traps\')','primary-btn') + '</div>', i;
+		for (i = 0; i < traps.length; i++) { s += '<div class="card trap"><h2>' + traps[i][1] + '</h2><p class="muted">' + traps[i][2] + '</p><p>' + marked(traps[i][3]) + '<br>' + marked(traps[i][4]) + '</p><p>' + traps[i][5] + '</p>' + button('Вежбај ову забуну','start(\'traps\',\'' + traps[i][0] + '\')','') + '</div>'; }
+		put(s,true);
+	}
+	function shuffle(a) { var i, j, v; for (i = a.length - 1; i > 0; i--) { j = Math.floor(Math.random() * (i + 1)); v = a[i]; a[i] = a[j]; a[j] = v; } return a; }
+	function contains(a,v) { var i; for (i = 0; i < a.length; i++) { if (a[i] === v) { return true; } } return false; }
+	function sentenceItem(i, isTrap) {
+		var opts = [0,1,2,3,4,5,6], groups = {ga:[1,3], dl:[2,6], al:[3,6], na:[0,3], nv:[0,4], gi:[1,5], ai:[3,5], dil:[2,5,6]};
+		if (isTrap) { opts = groups[rows[i][4]].slice(0); }
+		return {kind:'sentence', row:i, answer:rows[i][1], options:opts};
+	}
+	function start(mode, group) {
+		quizMode = mode; filter = group || ''; items = []; position = 0; correct = 0; mistakes = []; history = [];
+		var pool = [], i, j, chosen, used = {}, counts = [0,0,0,0,0,0,0];
+		if (mode === 'questions') {
+			/* Include every case, both recall directions across the shuffled deck. */
+			for (i = 0; i < 7; i++) { pool.push(i); } shuffle(pool);
+			for (i = 0; i < 10; i++) { chosen = pool[i % 7]; items.push({kind:i % 2 ? 'name' : 'question', answer:chosen, options:shuffle([0,1,2,3,4,5,6])}); }
+		} else {
+			for (i = 0; i < rows.length; i++) { if (mode !== 'traps' || (rows[i][4] && (!filter || rows[i][4] === filter))) { pool.push(i); } }
+			shuffle(pool);
+			/* Full sentence rounds cover all seven cases before drawing extras. */
+			if (mode === 'sentences') {
+				for (i = 0; i < pool.length; i++) { j = pool[i]; if (!counts[rows[j][1]]) { items.push(sentenceItem(j,false)); counts[rows[j][1]]++; used[j] = true; } }
+			}
+			for (i = 0; i < pool.length && items.length < 10; i++) { j = pool[i]; if (!used[j]) { items.push(sentenceItem(j,mode === 'traps')); used[j] = true; } }
+			shuffle(items);
+		}
+		screen = 'quiz'; prepare();
+	}
+	function prepare() { answered = false; selected = -1; hinted = false; quiz(true); }
+	function quiz(focus) {
+		var q = items[position], r = q.kind === 'sentence' ? rows[q.row] : null, s = nav() + '<div class="quiz"><div class="topline">' + (quizMode === 'questions' ? 'Питања за падеже' : quizMode === 'retry' ? 'Понови погрешене' : quizMode === 'traps' ? 'Разреши забуну' : 'Падеж у реченици') + '<span class="right">' + (position + 1) + ' / ' + items.length + '</span></div><div class="progress"><span style="width:' + Math.round(position / items.length * 100) + '%"></span></div><div class="card">', i, value, cls, label;
+		s += '<h2 id="focus-title" tabindex="-1">' + (r ? 'У ком је падежу означена именица?' : q.kind === 'question' ? 'Која питања иду уз овај падеж?' : 'Који падеж препознајеш?') + '</h2>';
+		s += '<div class="sentence">' + (r ? marked(r[0]) : q.kind === 'question' ? cases[q.answer][0] : cases[q.answer][1]) + '</div>';
+		if (r) { s += '<p class="muted small">Гледај целу реченицу, не само наставак.</p>'; }
+		s += '<div class="answers">';
+		for (i = 0; i < q.options.length; i++) {
+			value = q.options[i]; label = q.kind === 'question' ? cases[value][1] : cases[value][0]; cls = 'answer';
+			if (answered && value === q.answer) { cls += ' good'; label = 'Тачно: ' + label; } else if (answered && value === selected) { cls += ' bad'; label = 'Твој избор: ' + label; }
+			s += '<button type="button" class="' + cls + '"' + (answered ? ' disabled="disabled"' : '') + ' onclick="App.answer(' + value + ')"><span class="letter">' + (i + 1) + '</span>' + label + '</button>';
+		}
+		s += '</div>';
+		if (answered) {
+			s += '<div id="feedback" class="feedback' + (selected !== q.answer ? ' wrong' : '') + '" role="status" aria-live="polite" tabindex="-1"><h3>' + (selected === q.answer ? 'Тачно!' : 'Хајде да разјаснимо.') + '</h3><p><strong>' + cases[q.answer][0] + ' · ' + cases[q.answer][1] + '</strong></p>';
+			if (r) { s += '<p><strong>' + r[2] + '</strong></p><p>' + r[3] + '</p>'; }
+			else { s += '<p>' + cases[q.answer][2] + '</p><p>' + marked(cases[q.answer][3]) + ' ' + cases[q.answer][4] + '</p>'; if (selected !== q.answer) { s += '<p class="small">' + cases[q.answer][5] + '</p>'; } }
+			s += '</div><div class="actions">' + button(position + 1 === items.length ? 'Погледај резултат' : 'Следећи задатак','next()','primary-btn') + '</div>';
+		} else {
+			s += '<div class="actions">' + button('Мала помоћ','hint()','linkbtn') + '</div>';
+			if (hinted) { s += '<div class="hint" role="status">' + (r ? r[2] : cases[q.answer][2]) + (q.kind === 'sentence' ? '' : '<br>' + marked(cases[q.answer][3])) + '</div>'; }
+		}
+		s += '</div><p class="small muted">' + correct + ' тачних до сада. Нема журбе.</p></div>';
+		put(s,focus);
+		if (answered) { var feedback = document.getElementById('feedback'); try { feedback.focus(); } catch (e) {} }
+	}
+	function answer(v) { if (screen !== 'quiz' || answered || !contains(items[position].options,v)) { return; } selected = v; answered = true; if (v === items[position].answer) { correct++; } else { mistakes.push(items[position]); } history.push({item:items[position], selected:v}); quiz(false); }
+	function next() { if (screen !== 'quiz' || !answered) { return; } position++; if (position >= items.length) { finish(true); } else { prepare(); } }
+	function finish(focus) {
+		screen = 'result'; var pct = Math.round(correct / items.length * 100), i, h, r, q, s = nav() + '<div class="quiz card"><span class="kicker">РУНДА ЈЕ ГОТОВА</span>' + title(pct === 100 ? 'Свих седам — све јасније!' : 'Још један корак напред.') + '<div class="score">' + correct + ' / ' + items.length + '</div><p>' + (mistakes.length ? 'Погледај објашњења и понови оно што те је збунило.' : 'Одлично! Пробај нову рунду или тежи изазов са сличним падежима.') + '</p>';
+		if (quizMode !== 'retry' && !filter && items.length === 10) {
+			if (typeof best[quizMode] !== 'number' || pct > best[quizMode]) { best[quizMode] = pct; }
+			try { localStorage.setItem('padezi-best',JSON.stringify(best)); } catch (e) { saved = false; }
+		}
+		s += '<div class="actions">' + (mistakes.length ? button('Понови погрешене (' + mistakes.length + ')','retry()','primary-btn') : '') + button('Нова рунда','again()','') + button('Подсетник','learn()','') + '</div>';
+		for (i = 0; i < history.length; i++) { h = history[i]; q = h.item; if (h.selected !== q.answer) { r = q.kind === 'sentence' ? rows[q.row] : null; s += '<div class="review"><p>' + (r ? marked(r[0]) : q.kind === 'question' ? cases[q.answer][0] : cases[q.answer][1]) + '</p><p class="small muted">Твој избор: ' + (q.kind === 'question' ? cases[h.selected][1] : cases[h.selected][0]) + '</p><p><strong>' + cases[q.answer][0] + ' · ' + cases[q.answer][1] + '</strong></p><p>' + (r ? r[2] + ' ' + r[3] : cases[q.answer][5]) + '</p></div>'; } }
+		s += '</div>'; put(s,focus);
+	}
+	function retry() { if (!mistakes.length) { return; } items = shuffle(mistakes.slice(0)); mistakes = []; history = []; correct = 0; position = 0; quizMode = 'retry'; screen = 'quiz'; prepare(); }
+	function again() { start(quizMode === 'retry' ? 'sentences' : quizMode,filter); }
+	function hint() { if (screen !== 'quiz' || answered) { return; } hinted = true; quiz(false); }
+	function parents() {
+		screen = 'parents'; put(nav() + title('Кратко за родитеље.') + '<div class="card"><h2>Како да вежбате</h2><p>Крените од питања, затим пређите на реченице. У делу „Не дај да те збуне“ вежбајте једну забуну одједном. Тражите да дете наглас постави питање уз глагол или предлог.</p><p>Први одговор се рачуна. Помоћ је дозвољена, нема тајмера. Кратке рунде од 10 задатака подстичу редовно вежбање. Уски избор забуне може имати мање задатака; нема дуплирања реченица у рунди.</p><p>Резултат рунде са коришћеном помоћи такође се чува. Најбољи резултати су само подстицај за вежбање, не оцена знања. Понављање грешака и појединачне забуне не мењају те рекорде.</p><h2>Шта вежбамо</h2><p>' + rows.length + ' реченица, свих седам падежа и осам група забуна. Посебно: генитив/акузатив, датив/локатив, акузатив/локатив, номинатив/акузатив, номинатив/вокатив, генитив/инструментал уз „са“, акузатив/инструментал и исти облици множине.</p><p>Номинатив није увек вршилац радње, инструментал није само средство, а локатив није свака именица која означава место. Предлози се уче уз значење и целу реченицу.</p><h2>Приватност и стари iPad</h2><p>Нема налога, реклама, аналитике, спољних фонтова ни захтева ка другим сервисима. Чувају се само избор писма и најбољи резултати у овом прегледачу, ако је чување доступно.</p><p>Сајт је један HTML фајл са класичним JavaScript-ом. Ако оригинални iPad не може да отвори HTTPS адресу, погледај README за приступ преко локалног HTTP сервера. Компатибилност на физичком првом iPad-у није проверена.</p><p class="small">Граматички подсетник: <a href="https://www.opsteobrazovanje.in.rs/srpski-jezik/gramatika/padezi/">Опште образовање — Падежи</a>. Реченице и објашњења за овај квиз написани су посебно.</p></div>',true);
+	}
+	function reset() { if (window.confirm(latin ? 'Obrisati najbolje rezultate na ovom uređaju?' : 'Обрисати најбоље резултате на овом уређају?')) { best = {}; try { localStorage.removeItem('padezi-best'); } catch (e) {} home(true); } }
+	function toggleScript() { latin = !latin; try { localStorage.setItem('padezi-script',latin ? 'latin' : 'cyrillic'); } catch (e) { saved = false; } if (screen === 'quiz') { quiz(false); } else if (screen === 'learn') { learn(); } else if (screen === 'traps') { trapPage(); } else if (screen === 'result') { finish(false); } else if (screen === 'parents') { parents(); } else { home(false); } }
+	return {home:function(){home(true);},learn:learn,trapPage:trapPage,start:start,answer:answer,next:next,hint:hint,retry:retry,again:again,parents:parents,reset:reset,toggleScript:toggleScript,init:function(){home(false);}};
+}());
+App.init();
+</script>
+</body>
+</html>
