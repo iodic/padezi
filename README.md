@@ -11,7 +11,7 @@ Projekat je statički: nema instalacije paketa ni build koraka.
 3. Build Command: prazno; Output Directory: `.`; ne treba Install Command.
 4. Deploy.
 
-Alternativa, ako već koristiš Vercel CLI: u ovom folderu `vercel --prod`.
+Produkcija: https://padezi-kviz.vercel.app (projekat `padezi-kviz`). Ručni deploy: `vercel deploy --prod`.
 
 Nema backend-a, ključeva, baze, kolačića ni spoljašnjih zavisnosti. `index.html` sadrži i stilove i sve zadatke; dovoljan je taj jedan fajl za rad kviza. Ne treba Service Worker niti podrška za module.
 
@@ -19,7 +19,7 @@ Nema backend-a, ključeva, baze, kolačića ni spoljašnjih zavisnosti. `index.h
 
 Kod je namerno pisan u ES3 stilu: `var`, obične funkcije, `onclick`, `innerHTML`. Nema React-a, modula, fetch-a, Promise-a, let/const-a, arrow funkcija, Flexbox-a, Grid-a, CSS varijabli, web-fontova, SVG-a ni novijih API-ja. Raspored koristi inline-block; kontrole su velike i rade na dodir. Čuvanje rezultata je opciono i obuhvaćeno try/catch blokovima (privatni režim starog Safarija može zabraniti upis).
 
-**Važno: kompatibilan kod nije garancija da stari uređaj može uspostaviti HTTPS vezu sa Vercelom.** iOS 5 ima TLS 1.2, ali to samo po sebi ne garantuje odgovarajuće cipher suite-ove i poverenje u današnje sertifikate. Vercel trenutno navodi TLS 1.2/1.3 i moderni skup cipher suite-ova. Prvi iPad nije fizički testiran; HTTPS treba probati baš na njemu.
+**Važno: prvi iPad ne može da otvori Vercel adresu.** Provereno 2026-11-23: `*.vercel.app` na TLS 1.2 prihvata samo AES-GCM i ChaCha20 cipher suite-ove, a iOS 5/6 Safari ima samo CBC (GCM stiže tek u iOS 9). HTTP zahtev Vercel preusmerava na HTTPS (308 + `Refresh`), pa ni to ne pomaže. Kod je kompatibilan; problem je samo TLS na hostingu.
 
 Pouzdan rezervni put je običan HTTP na kućnoj mreži:
 
